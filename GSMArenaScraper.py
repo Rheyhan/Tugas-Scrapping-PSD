@@ -26,7 +26,7 @@ class GSMArenaScraper():
     def __init__(self, hidden=True, timer=4):
         '''Your normal init thing?'''
         self.web="https://www.gsmarena.com/"
-        self.hidden= hidden                                                                                                     #if set false, not need to run either getidentity or getidentityfile
+        self.hidden= hidden                                                                                                     #if set false, not need to run self.getidentity()
         self.timer=timer
         self.useragentlist=[UserAgent().random for i in range(100)]                                                            #get UserAgentList
         #empty list for what imma scrap next.
@@ -145,7 +145,7 @@ class GSMArenaScraper():
             scrsize="Na"
             pass
         try:
-            scrtype=phonespecsoup.find("td", attrs={"data-spec":"displaytype"}).text.strip(" pixels")                                                        #type
+            scrtype=phonespecsoup.find("td", attrs={"data-spec":"displaytype"}).text                                                                        #type
         except:
             scrtype="Na"
             pass
@@ -215,7 +215,7 @@ class GSMArenaScraper():
                 r=self.requestget(page)
                 soup=BeautifulSoup(r.content, "html5lib")
                 thetable=soup.find("div", attrs={"class" : "makers"})
-                self.manufacturer=soup.find("h1", attrs={"class" : "article-info-name"}).text.strip(" phones")
+                self.manufacturer=soup.find("h1", attrs={"class" : "article-info-name"}).text.strip("phones")
                 for phone in thetable.find_all("a"):
                     speclink= self.web + phone["href"]
                     self.getphonespec(speclink)
@@ -223,7 +223,7 @@ class GSMArenaScraper():
             r=self.requestget(pages)
             soup=BeautifulSoup(r.content, "html5lib")
             thetable=soup.find("div", attrs={"class" : "makers"})
-            self.manufacturer=soup.find("h1", attrs={"class" : "article-info-name"}).text.strip(" phones")
+            self.manufacturer=soup.find("h1", attrs={"class" : "article-info-name"}).text.strip("phones")
             for phone in thetable.find_all("a"):
                 speclink= self.web + phone["href"]
                 self.getphonespec(speclink)
